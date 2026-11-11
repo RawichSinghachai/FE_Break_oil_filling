@@ -1,7 +1,19 @@
 import { VACUUM_DISPLAY_MAX } from '@/lib/constants';
 import type { RealtimeCommon, RealtimeMessage, RealtimeSide } from '@/types/ws';
 
-export const WS_URL = process.env.NEXT_PUBLIC_WS_URL ?? '';
+/** ตั้งค่าไว้ = เบราว์เซอร์ต่อ WebSocket ตรงไป URL นี้ ; ว่าง = ใช้ same-origin (ดู resolveWsUrl) */
+const WS_URL_ENV = process.env.NEXT_PUBLIC_WS_URL ?? '';
+
+/**
+ * URL ของ WebSocket (เรียกเฉพาะฝั่งเบราว์เซอร์)
+ * ไม่ได้ตั้ง NEXT_PUBLIC_WS_URL → ต่อผ่านโดเมนเดียวกับหน้าเว็บ (/api/ws/realtime) แล้วให้ Next.js proxy ไป backend ผ่าน rewrites
+ * หน้า https (เช่น tailscale funnel) จะได้ wss:// อัตโนมัติ ไม่ติด mixed content และไม่ต้องเปิด backend สู่ภายนอก
+ */
+export function resolveWsUrl(): string {
+  if (WS_URL_ENV) return WS_URL_ENV;
+  if (typeof window === 'undefined') return '';
+  return `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/api/ws/realtime`;
+}
 
 type Obj = Record<string, unknown>;
 
