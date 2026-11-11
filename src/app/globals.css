@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+
+/* สี / dark theme ย้ายมาจาก :root ของ mockup — ค่า hex ของ chart อยู่ใน lib/constants.ts (COLORS) ให้ตรงกัน */
+@theme {
+  --color-page: #0d0d0d;
+  --color-surface: #1a1a19;
+  --color-surface-2: #222221;
+  --color-text: #f0efec;
+  --color-text-2: #c3c2b7;
+  --color-muted: #898781;
+  --color-grid: #2c2c2a;
+  --color-baseline: #383835;
+  --color-border: rgb(255 255 255 / 0.1);
+  --color-s1: #3987e5; /* blue  - input / primary / LH */
+  --color-s2: #d95926; /* orange - vacuum step */
+  --color-s3: #199e70; /* aqua  - RH */
+  --color-good: #0ca30c;
+  --color-warn: #fab219;
+  --color-serious: #ec835a;
+  --color-crit: #d03b3b;
+  --color-crit-soft: #ff9b9b;
+  --color-pass-soft: #7ee787;
+  --color-pending-soft: #ffce73;
+  --color-predict: #e34948;
+
+  --radius-card: 14px;
+  --font-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--color-page);
+}
+
+body {
+  margin: 0;
+  background: var(--color-page);
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+button:not(:disabled),
+[role='button']:not(:disabled) {
+  cursor: pointer;
+}
+
+@layer components {
+  /* input / select ของ filter */
+  .ctl {
+    background: var(--color-surface-2);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 9px;
+    padding: 8px 11px;
+    font-size: 13px;
+    font-family: inherit;
+    min-width: 130px;
+    height: 38px;
+  }
+  .ctl:focus {
+    outline: none;
+    border-color: var(--color-s1);
+  }
+  select.ctl {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4l4 4 4-4' fill='none' stroke='%23898781' stroke-width='1.6'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 11px center;
+    padding-right: 30px;
+  }
+}
